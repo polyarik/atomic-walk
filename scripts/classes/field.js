@@ -6,7 +6,7 @@ class Field {
 	}
 
 	plantBomb(coords, size) {
-		//choose one kind of bomb (bu size)
+		//choose one kind of bomb (by size)
 		const bomb = new Bomb(coords); //TEMP
 		this.bombs.push(bomb);
 
@@ -27,5 +27,20 @@ class Field {
 
 		this.bombs = [];
 		return explosions;
+	}
+
+	get renderData() {
+		let renderData = {
+			'bombs': []
+		};
+
+		const bombs = this.bombs;
+		
+		for (let i = 0, l = bombs.length; i < l; i++) {
+			const bombRenderData = bombs[i].renderData;
+			renderData.bombs.push(bombRenderData);
+		}
+
+		return renderData;
 	}
 }

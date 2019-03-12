@@ -3,88 +3,81 @@ class Game {
 		console.log("Game");
 
 		this.Field = new Field();
-		this.Hero = new Hero( {'x': window.innerWidth/2, 'y': window.innerWidth/2} );
+		this.Hero = new Hero( {'x': window.innerWidth/2, 'y': window.innerHeight/2} );
+		this.Canvas = new Canvas(
+			canvasId,
+			{'hero': this.Hero.renderData, 'field': this.Field.renderData}
+		);
 
-		this.initCanvas(canvasId);
-
-		this.interval = window.setInterval(() => {
-			this.render();
-		}, 20);
+		this.initControls();
 	}
 
-	// Graphics
+	initControls() {
+		window.onmousedown = (e) => {
+			const which = e.which;
 
-	initCanvas(canvasId) {
-		this.canvas = document.getElementById(canvasId);
-		this.ctx = this.canvas.getContext("2d");
-
-		window.onresize = () => {
-			this.resize();
+			if (which === 1) {
+				this.startBombPlanting = new Date();
+			}
 		}
 
-		this.resize();
+		window.onmouseup = (e) => {
+			const which = e.which;
+
+			if (which === 1) {
+				const coords = {'x': e.clientX, 'y': e.clientY};
+				const bombSize = new Date() - this.startBombPlanting;
+				this.startBombPlanting = 0;
+
+				console.log(bombSize);
+
+				this.plantBomb(coords, bombSize);
+			} else if (which === 3) {
+				this.explodeBombs();
+			}
+		}
+
+		window.onmousemove = (e) => {
+			const coords = {'x': e.clientX, 'y': e.clientY};
+			this.Hero.move(coords);
+
+			this.render();
+		}
 	}
-
-	resize() {
-		this.canvas.width = window.innerWidth;
-		this.canvas.height = window.innerHeight;
-
-		this.render();
-	}
-
-	render() {
-		const canvas = this.canvas;
-		const ctx = this.ctx;
-		ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-		this.renderHero();
-	}
-
-	renderHero() {
-		const ctx = this.ctx;
-		const heroRenderData = this.Hero.renderData;
-		// {'coords': {'x', 'y'}, 'radius', 'color': {'fill', 'stroke'}};
-
-		ctx.beginPath();
-			ctx.arc(
-				heroRenderData.coords.x,
-				heroRenderData.coords.y,
-				heroRenderData.radius,
-				0,
-				Math.PI*2,
-				false
-			);
-
-			ctx.fillStyle = heroRenderData.color.fill;
-			ctx.fill();
-
-			ctx.lineWidth = heroRenderData.radius / 10;
-			ctx.strokeStyle = heroRenderData.color.stroke;
-			ctx.stroke();
-		ctx.closePath();
-	}
-
-	// Gameplay
 
 	plantBomb(coords) {
 		/*Add a new bomb*/
 		this.Field.plantBomb(coords);
+
+		this.render();
 	}
 
 	explodeBombs() {
 		/*Detonate all bombs*/
 		const explosions = this.Field.explodeBombs(); //explosions (coords, radius)
+		console.log(explosions);
 
-		//checking expls areas (will it touches Hero?)
+		//checking expls areas (will it touches Hero?) + (consider hero radius)
+
+		this.render();
 	}
 
-	start() {
+	render() {
+		const renderData = {
+			'hero': this.Hero.renderData,
+			'field': this.Field.renderData
+		};
+
+		this.Canvas.setRenderData = renderData;
+	}
+
+	/*start() {
 
 	}
 
 	end() {
 
-	}
+	}*/
 
 	//
 }
