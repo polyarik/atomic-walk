@@ -1,11 +1,9 @@
-/*Should be classes wich extend from Bomb (super-bomb, etc)*/
-
 class Bomb {
-	constructor(coords) {
+	constructor(coords, size) {
 		console.log("Bomb");
 
 		this.coords = coords;
-		this.explodeRadius = 100; //in px
+		this.explodeRadius = size < 500 ? 100 : size/5;
 	}
 
 	explode() {
@@ -15,7 +13,7 @@ class Bomb {
 
 	get renderData() {
 		const coords = this.coords;
-		const radius = Math.sqrt(this.explodeRadius);
+		const radius = Math.pow(this.explodeRadius, 2/5);
 
 		const fillColor = 'hsl(230, '+this.explodeRadius / 30+'%, 50%)';
 		const strokeColor = 'hsl(230, 15%, 15%)'; //CALC COLOR

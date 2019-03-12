@@ -29,8 +29,6 @@ class Game {
 				const bombSize = new Date() - this.startBombPlanting;
 				this.startBombPlanting = 0;
 
-				console.log(bombSize);
-
 				this.plantBomb(coords, bombSize);
 			} else if (which === 3) {
 				this.explodeBombs();
@@ -45,9 +43,9 @@ class Game {
 		}
 	}
 
-	plantBomb(coords) {
+	plantBomb(coords, bombSize) {
 		/*Add a new bomb*/
-		this.Field.plantBomb(coords);
+		this.Field.plantBomb(coords, bombSize);
 
 		this.render();
 	}
