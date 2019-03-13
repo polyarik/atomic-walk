@@ -1,9 +1,22 @@
 class Canvas {
-	constructor(canvasId, renderData) {
+	constructor(heroCanvasId, fieldCanvasId, renderData) {
 		console.log("Canvas");
 
-		this.canvas = document.getElementById(canvasId);
-		this.ctx = this.canvas.getContext("2d");
+		const heroCanvas = document.getElementById(heroCanvasId);
+		const heroCtx = heroCanvas.getContext("2d");
+		const fieldCanvas = document.getElementById(fieldCanvasId);
+		const fieldCtx = fieldCanvas.getContext("2d");
+
+		this.canvases = {
+			'hero': {
+				'canvas': heroCanvas,
+				'ctx': heroCtx
+			},
+			'field': {
+				'canvas': fieldCanvas,
+				'ctx': fieldCtx
+			}
+		};
 
 		this.renderData = renderData;
 		/*{
@@ -21,23 +34,40 @@ class Canvas {
 	}
 
 	resize() {
-		this.canvas.width = window.innerWidth;
-		this.canvas.height = window.innerHeight;
+		const width = window.innerWidth;
+		const height = window.innerHeight;
+
+		for (let i in this.canvases) {
+			let canvas = this.canvases[i].canvas;
+			canvas.width = width;
+			canvas.height = height;
+		}
 
 		this.render();
 	}
 
 	render() {
-		const canvas = this.canvas;
-		const ctx = this.ctx;
-		ctx.clearRect(0, 0, canvas.width, canvas.height);
-
 		this.renderField();
 		this.renderHero();
 	}
 
 	renderField() {
+		const ctx = this.canvases.field.ctx;
+
+		const width = window.innerWidth;
+		const height = window.innerHeight;
+		ctx.clearRect(0, 0, width, height);
+
+		this.renderBombsAreas();
 		this.renderBombs();
+	}
+
+	renderBombsAreas() {
+		//show bombs' affecting areas
+	}
+
+	renderBombArea(renderData) {
+
 	}
 
 	renderBombs() {
@@ -50,7 +80,7 @@ class Canvas {
 	}
 
 	renderBomb(renderData) {
-		const ctx = this.ctx;
+		const ctx = this.canvases.field.ctx;
 
 		ctx.beginPath();
 			ctx.arc(
@@ -72,7 +102,12 @@ class Canvas {
 	}
 
 	renderHero() {
-		const ctx = this.ctx;
+		const ctx = this.canvases.hero.ctx;
+
+		const width = window.innerWidth;
+		const height = window.innerHeight;
+		ctx.clearRect(0, 0, width, height);
+
 		const heroRenderData = this.renderData.hero;
 		// {'coords': {'x', 'y'}, 'radius', 'color': {'fill', 'stroke'}};
 
@@ -98,5 +133,15 @@ class Canvas {
 	set setRenderData(renderData) {
 		this.renderData = renderData;
 		this.render();
+	}
+
+	set heroRenderData(heroRenderData) {
+		this.renderData.hero = heroRenderData;
+		this.renderHero();
+	}
+
+	set fieldRenderData(fieldRenderData) {
+		this.renderData.field = fieldRenderData;
+		this.renderField();
 	}
 }

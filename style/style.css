@@ -6,6 +6,12 @@ html, body {
 	overflow: hidden;
 }
 
-#canvas {
+#hero-canvas {
 	position: absolute;
+	z-index: 2;
+}
+
+#field-canvas {
+	position: absolute;
+	z-index: 1;
 }

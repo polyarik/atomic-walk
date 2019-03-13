@@ -1,11 +1,12 @@
 class Game {
-	constructor(canvasId) {
+	constructor(heroCanvasId, fieldCanvasId) {
 		console.log("Game");
 
 		this.Field = new Field();
 		this.Hero = new Hero( {'x': window.innerWidth/2, 'y': window.innerHeight/2} );
 		this.Canvas = new Canvas(
-			canvasId,
+			heroCanvasId,
+			fieldCanvasId,
 			{'hero': this.Hero.renderData, 'field': this.Field.renderData}
 		);
 
@@ -16,7 +17,7 @@ class Game {
 		window.onmousedown = (e) => {
 			const which = e.which;
 
-			if (which === 1) {
+			if (which === 3) {
 				this.startBombPlanting = new Date();
 			}
 		}
@@ -24,13 +25,13 @@ class Game {
 		window.onmouseup = (e) => {
 			const which = e.which;
 
-			if (which === 1) {
+			if (which === 3) {
 				const coords = {'x': e.clientX, 'y': e.clientY};
 				const bombSize = new Date() - this.startBombPlanting;
 				this.startBombPlanting = 0;
 
 				this.plantBomb(coords, bombSize);
-			} else if (which === 3) {
+			} else if (which === 1) {
 				this.explodeBombs();
 			}
 		}
@@ -39,7 +40,8 @@ class Game {
 			const coords = {'x': e.clientX, 'y': e.clientY};
 			this.Hero.move(coords);
 
-			this.render();
+			const heroRenderData = this.Hero.renderData;
+			this.Canvas.heroRenderData = heroRenderData;
 		}
 	}
 
@@ -47,7 +49,8 @@ class Game {
 		/*Add a new bomb*/
 		this.Field.plantBomb(coords, bombSize);
 
-		this.render();
+		const fieldRenderData = this.Field.renderData;
+		this.Canvas.fieldRenderData = fieldRenderData;
 	}
 
 	explodeBombs() {
@@ -55,18 +58,12 @@ class Game {
 		const explosions = this.Field.explodeBombs(); //explosions (coords, radius)
 		console.log(explosions);
 
-		//checking expls areas (will it touches Hero?) + (consider hero radius)
+		if (explosions) {
+			//checking expls areas (will it touches Hero?) + (consider hero radius)
 
-		this.render();
-	}
-
-	render() {
-		const renderData = {
-			'hero': this.Hero.renderData,
-			'field': this.Field.renderData
-		};
-
-		this.Canvas.setRenderData = renderData;
+			const fieldRenderData = this.Field.renderData;
+			this.Canvas.fieldRenderData = fieldRenderData;
+		}
 	}
 
 	/*start() {
