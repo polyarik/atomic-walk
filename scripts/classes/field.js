@@ -1,12 +1,10 @@
 class Field {
 	constructor() {
-		console.log("Field");
-
+		//console.log("Field");
 		this.bombs = [];
 	}
 
 	plantBomb(coords, size) {
-		console.log(size);
 		const bomb = new Bomb(coords, size);
 		this.bombs.push(bomb);
 

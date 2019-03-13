@@ -1,7 +1,6 @@
 class Bomb {
 	constructor(coords, size) {
-		console.log("Bomb");
-
+		//console.log("Bomb");
 		this.coords = coords;
 		this.explodeRadius = (size < 500) ? (100) : (size/10 + 50);
 	}

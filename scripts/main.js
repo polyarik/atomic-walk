@@ -3,7 +3,7 @@ document.ondragstart = function() {return false};
 
 
 function main() {
-	console.log("start");
+	//console.log("start");
 
 	const heroCanvasId = "hero-canvas";
 	const fieldCanvasId = "field-canvas";

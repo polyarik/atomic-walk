@@ -1,7 +1,6 @@
 class Canvas {
 	constructor(canvasesId, renderData) {
-		console.log("Canvas");
-
+		//console.log("Canvas");
 		const heroCanvasId = canvasesId.hero;
 		const fieldCanvasId = canvasesId.field;
 
