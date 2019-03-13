@@ -3,7 +3,7 @@ class Bomb {
 		console.log("Bomb");
 
 		this.coords = coords;
-		this.explodeRadius = size < 500 ? 100 : size/5;
+		this.explodeRadius = (size < 500) ? (100) : (size/10 + 50);
 	}
 
 	explode() {
@@ -13,9 +13,9 @@ class Bomb {
 
 	get renderData() {
 		const coords = this.coords;
-		const radius = Math.pow(this.explodeRadius, 2/5);
+		const radius = Math.round( Math.pow(this.explodeRadius, 5/11) );
 
-		const fillColor = 'hsl(230, '+this.explodeRadius / 30+'%, 50%)';
+		const fillColor = 'hsl(230, '+this.explodeRadius / 20+'%, 50%)';
 		const strokeColor = 'hsl(230, 15%, 15%)'; //CALC COLOR
 
 		const renderData = {

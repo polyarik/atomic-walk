@@ -1,12 +1,11 @@
 class Game {
-	constructor(heroCanvasId, fieldCanvasId) {
+	constructor(canvasesId) {
 		console.log("Game");
 
 		this.Field = new Field();
 		this.Hero = new Hero( {'x': window.innerWidth/2, 'y': window.innerHeight/2} );
 		this.Canvas = new Canvas(
-			heroCanvasId,
-			fieldCanvasId,
+			canvasesId,
 			{'hero': this.Hero.renderData, 'field': this.Field.renderData}
 		);
 

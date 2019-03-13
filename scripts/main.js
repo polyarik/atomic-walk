@@ -7,6 +7,7 @@ function main() {
 
 	const heroCanvasId = "hero-canvas";
 	const fieldCanvasId = "field-canvas";
+	const canvasesId = {'hero': heroCanvasId, 'field': fieldCanvasId};
 
-	let game = new Game(heroCanvasId, fieldCanvasId);
+	let game = new Game(canvasesId);
 }

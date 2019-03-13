@@ -1,15 +1,15 @@
-Atomic Walk - kinda mini-game; small practice work with vectors
+﻿Atomic Walk - kinda mini-game; small practice work with vectors
 
 Gameplay:
 +Move mouse to move the Hero
 +Press rmb to plant a bomb
--Press lmb to detonate all planted bombs
++Press lmb to detonate all planted bombs
 .If Hero in blow area, he'll lose hp
 .Damage depends on distance between hero n explosioned bomb
 .If Hero hp decrease to 0, he'll die
 
 Graphics:
 -Hero is a circle (color depends on his hp)
--Bomb is a grey-blue circe
-.Bombs' affecting areas show as red 50% transparent circles
++Bomb is a grey-blue circe
++Bombs' affecting areas show as red alpha circles
 .Hp bar consists of squares (located in top-left corner)

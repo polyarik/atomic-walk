@@ -1,6 +1,9 @@
 class Canvas {
-	constructor(heroCanvasId, fieldCanvasId, renderData) {
+	constructor(canvasesId, renderData) {
 		console.log("Canvas");
+
+		const heroCanvasId = canvasesId.hero;
+		const fieldCanvasId = canvasesId.field;
 
 		const heroCanvas = document.getElementById(heroCanvasId);
 		const heroCtx = heroCanvas.getContext("2d");
@@ -58,16 +61,7 @@ class Canvas {
 		const height = window.innerHeight;
 		ctx.clearRect(0, 0, width, height);
 
-		this.renderBombsAreas();
 		this.renderBombs();
-	}
-
-	renderBombsAreas() {
-		//show bombs' affecting areas
-	}
-
-	renderBombArea(renderData) {
-
 	}
 
 	renderBombs() {
@@ -75,8 +69,40 @@ class Canvas {
 
 		for (let i = 0, l = bombsRenderData.length; i < l; i++) {
 			const bombRenderData = bombsRenderData[i];
-			this.renderBomb(bombRenderData)
+
+			const bombAreaRenderData = {
+				'coords': bombRenderData.coords,
+				'radius':  Math.round( Math.pow(bombRenderData.radius, 11/5) )
+			};
+
+			this.renderBombArea(bombAreaRenderData);
 		}
+
+		for (let i = 0, l = bombsRenderData.length; i < l; i++) {
+			const bombRenderData = bombsRenderData[i];
+			this.renderBomb(bombRenderData);
+		}
+	}
+
+	renderBombArea(renderData) {
+		const ctx = this.canvases.field.ctx;
+		ctx.globalAlpha = 0.025;
+
+		ctx.beginPath();
+			ctx.arc(
+				renderData.coords.x,
+				renderData.coords.y,
+				renderData.radius,
+				0,
+				Math.PI*2,
+				false
+			);
+
+			ctx.fillStyle = 'hsl(0, 100%, 50%)';
+			ctx.fill();
+		ctx.closePath();
+
+		ctx.globalAlpha = 1;
 	}
 
 	renderBomb(renderData) {
