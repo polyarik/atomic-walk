@@ -1,4 +1,4 @@
-﻿Atomic Walk - kinda mini-game; small practice work with vectors
+﻿Atomic Walk - kinda mini-game; small practice with vectors
 
 Gameplay:
 +Move mouse to move the Hero

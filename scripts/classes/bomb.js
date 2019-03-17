@@ -15,7 +15,7 @@ class Bomb {
 		const radius = Math.round( Math.pow(this.explodeRadius, 5/11) );
 
 		const fillColor = 'hsl(230, '+this.explodeRadius / 20+'%, 50%)';
-		const strokeColor = 'hsl(230, 15%, 15%)'; //CALC COLOR
+		const strokeColor = 'hsl(230, 15%, 15%)';
 
 		const renderData = {
 			'coords': coords,

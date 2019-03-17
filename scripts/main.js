@@ -1,6 +1,7 @@
 document.oncontextmenu = function () {return false};
 document.ondragstart = function() {return false};
 
+var game;
 
 function main() {
 	//console.log("start");
@@ -9,5 +10,5 @@ function main() {
 	const fieldCanvasId = "field-canvas";
 	const canvasesId = {'hero': heroCanvasId, 'field': fieldCanvasId};
 
-	let game = new Game(canvasesId);
+	game = new Game(canvasesId);
 }

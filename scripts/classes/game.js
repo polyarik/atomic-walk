@@ -69,7 +69,7 @@ class Game {
 					Math.sqrt(
 						Math.abs(
 							Math.pow(explosionCoords.x - heroCords.x, 2)
-							- Math.pow(explosionCoords.y - heroCords.y, 2)
+							+ Math.pow(explosionCoords.y - heroCords.y, 2)
 						)
 					)
 				);
@@ -78,9 +78,9 @@ class Game {
 
 				if (dist <= explosionRadius) {
 					const damage = Math.round( Math.pow(explosionRadius - dist, 2) );
-
 					const heroHP = this.Hero.changeHP(-damage);
-					console.log('Hero HP: '+heroHP);
+					
+					console.log('damage: '+damage);
 
 					if (heroHP <= 0)
 						this.end();
